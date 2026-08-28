@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hichem Mezaad "Ginzo" — Future Statistics Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Kalam:wght@400;700&family=Noto+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#080808;
+    --bg-panel:#161c18;
+    --bg-input:#101512;
+    --chalk:#ece7d9;
+    --chalk-dim:#e2e0cb;
+    --gold:#d7a441;
+    --teal:#6fa88f;
+    --rust:#bd6440;
+    --rule: rgba(236,231,217,0.14);
+    --rule-soft: rgba(236,231,217,0.08);
+    --chart-base:#3a4038;
+    --shadow: rgba(0,0,0,0.5);
+  }
+
+  /* Light Theme Overrides */
+  [data-theme="light"] {
+    --bg: #f8f6f0;
+    --bg-panel: #eae6db;
+    --bg-input: #dfdbcd;
+    --chalk: #1a1a18;
+    --chalk-dim: #5c5a52;
+    --gold: #b37e19;
+    --teal: #2f7a5b;
+    --rust: #a84b29;
+    --rule: rgba(26,26,24,0.16);
+    --rule-soft: rgba(26,26,24,0.08);
+    --chart-base: #bcbaa9;
+    --shadow: rgba(0,0,0,0.08);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+  body{
+    background:var(--bg);
+    color:var(--chalk);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    position:relative;
+    overflow-x:hidden;
+    transition:background-color 0.3s ease, color 0.3s ease;
+  }
+  /* chalk dust texture */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:1;
+    opacity:0.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:0 28px; position:relative; z-index:2;}
+
+  /* Top Navigation & Theme Toggle */
+  .top-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:24px 0 10px;
+  }
+  .theme-toggle{
+    background:var(--bg-panel);
+    border:1px dashed var(--rule);
+    color:var(--chalk);
+    padding:8px 14px;
+    border-radius:20px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:all 0.25s ease;
+  }
+  .theme-toggle:hover{
+    border-color:var(--gold);
+    color:var(--gold);
+    transform:translateY(-1px);
+  }
+  .theme-toggle svg{
+    width:15px;
+    height:15px;
+    fill:currentColor;
+  }
+
+  header.hero{
+    padding:40px 0 50px;
+    border-bottom:1px solid var(--rule);
+    position:relative;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:20px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:"§"; color:var(--chalk-dim); font-family:'IBM Plex Mono';}
+  h1.name{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(38px, 7vw, 68px);
+    line-height:1.05;
+    letter-spacing:-0.01em;
+    max-width:620px;
+  }
+  h1.name em{
+    font-style:italic;
+    color:var(--gold);
+    font-weight:500;
+  }
+  .role-line{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:15px;
+    color:var(--chalk-dim);
+    margin-top:14px;
+    letter-spacing:0.03em;
+  }
+  .profile-wrap{
+    position:absolute;
+    top:30px;
+    right:0;
+    width:180px;
+    height:180px;
+  }
+  .profile-photo{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    border-radius:50%;
+    border:2px solid var(--gold);
+    padding:0;
+    background:#000;
+    box-shadow:0 0 0 1px var(--rule-soft), 0 8px 24px var(--shadow);
+    display:block;
+  }
+
+  /* Stat Badges */
+  .hero-stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+    gap:14px;
+    margin-top:38px;
+  }
+  .stat-card{
+    background:var(--bg-panel);
+    border:1px dashed var(--rule);
+    border-radius:2px;
+    padding:16px 18px;
+    transition:transform 0.25s ease, border-color 0.25s ease;
+  }
+  .stat-card:hover{
+    transform:translateY(-2px);
+    border-color:var(--gold);
+  }
+  .stat-val{
+    font-family:'Fraunces', serif;
+    font-size:26px;
+    color:var(--gold);
+    font-weight:500;
+    display:flex;
+    align-items:baseline;
+    gap:4px;
+  }
+  .stat-val span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:14px;
+    color:var(--teal);
+  }
+  .stat-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--chalk-dim);
+    margin-top:4px;
+    letter-spacing:0.02em;
+  }
+
+  /* Gaussian Normal Distribution Curve */
+  .hero-distribution{
+    margin-top:34px;
+    background:var(--bg-panel);
+    border:1px solid var(--rule-soft);
+    border-radius:4px;
+    padding:20px 20px 14px;
+  }
+  .hero-distribution svg{
+    width:100%;
+    height:auto;
+    display:block;
+  }
+  .dist-caption{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--chalk-dim);
+    letter-spacing:0.03em;
+    margin-top:12px;
+    text-align:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+
+  section{padding:64px 0; border-bottom:1px solid var(--rule);}
+  section:last-of-type{border-bottom:none;}
+  .sec-head{
+    display:flex; align-items:baseline; gap:14px; margin-bottom:36px;
+  }
+  .sec-num{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--gold);
+    font-size:14px;
+    letter-spacing:0.1em;
+  }
+  h2{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(26px,4vw,34px);
+  }
+  .margin-note{
+    font-family:'Kalam', cursive;
+    font-size:15px;
+    color:var(--rust);
+    margin-left:auto;
+    transform:rotate(-1deg);
+  }
+
+  p.lede{
+    font-size:17px;
+    color:var(--chalk);
+    max-width:700px;
+  }
+  p.lede .accent{color:var(--teal);}
+  p.lede .gold-accent{color:var(--gold); font-weight:500;}
+
+  /* timeline */
+  .timeline{position:relative; margin-top:8px; padding-left:26px;}
+  .timeline::before{
+    content:""; position:absolute; left:5px; top:6px; bottom:6px; width:1px; background:var(--rule);
+  }
+  .t-item{position:relative; padding-bottom:34px;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-item::before{
+    content:""; position:absolute; left:-26px; top:5px; width:9px; height:9px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--gold);
+  }
+  .t-role{font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--gold); letter-spacing:0.03em; margin-bottom:4px;}
+  .t-title{font-family:'Fraunces', serif; font-size:19px; font-weight:500; margin-bottom:6px;}
+  .t-desc{font-size:15px; color:var(--chalk-dim); max-width:680px;}
+
+  /* skills */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(190px,1fr));
+    gap:14px;
+    margin-top:8px;
+  }
+  .skill-card{
+    border:1px dashed var(--rule);
+    border-radius:2px;
+    padding:16px 16px 14px;
+    background:var(--bg-panel);
+    transition:border-color 0.25s ease, transform 0.25s ease;
+  }
+  .skill-card:hover{border-color:var(--gold); transform:translateY(-2px);}
+  .skill-name{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:14px;
+    font-weight:500;
+    letter-spacing:0.02em;
+  }
+  .skill-rating{
+    margin-left:auto;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--chalk-dim);
+  }
+  .skill-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+  }
+  .skill-ticks{margin-top:10px; display:flex; gap:4px;}
+  .tick{
+    width:14px;
+    height:4px;
+    background:var(--rule);
+    position:relative;
+    overflow:hidden;
+  }
+  .tick.on{background:var(--teal);}
+  .tick.half::after{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    width:50%;
+    background:var(--teal);
+  }
+
+  /* projects */
+  .project-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:18px; margin-top:8px;
+  }
+  .project-card{
+    border:1px dashed var(--rule);
+    border-radius:2px;
+    padding:22px;
+    background:var(--bg-panel);
+    min-height:260px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    transition:border-color 0.25s ease, transform 0.25s ease;
+  }
+  .project-card:hover{
+    border-color:var(--gold);
+    transform:translateY(-3px);
+  }
+  .project-slot-label{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--rust);
+  }
+  .project-slot-title{
+    font-family:'Fraunces', serif; font-size:20px; margin-top:8px; color:var(--chalk); font-weight:500;
+  }
+  .project-tags{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--teal);
+    margin-top:6px;
+    letter-spacing:0.02em;
+  }
+  .project-slot-desc{
+    font-size:13.5px; color:var(--chalk-dim); margin-top:12px; line-height:1.5;
+  }
+  .project-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:20px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    font-weight:600;
+    color:var(--gold);
+    text-decoration:none;
+    letter-spacing:0.05em;
+    border-bottom:1px solid transparent;
+    transition:border-color 0.2s ease, gap 0.2s ease;
+    align-self:flex-start;
+  }
+  .project-link:hover{
+    border-color:var(--gold);
+    gap:9px;
+  }
+
+  /* Contact Section */
+  .contact-section{
+    display:grid;
+    grid-template-columns:1fr 1.2fr;
+    gap:40px;
+    align-items:start;
+  }
+  .contact-info-list{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    margin-top:16px;
+  }
+  .contact-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--chalk-dim);
+  }
+  .contact-icon-box{
+    width:36px;
+    height:36px;
+    border-radius:4px;
+    background:var(--bg-input);
+    border:1px solid var(--rule);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--gold);
+    flex-shrink:0;
+    transition:border-color 0.2s ease, color 0.2s ease;
+  }
+  .contact-item:hover .contact-icon-box{
+    border-color:var(--gold);
+    color:var(--teal);
+  }
+  .contact-icon-box svg{
+    width:18px;
+    height:18px;
+    fill:currentColor;
+  }
+  .contact-text{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .contact-label{
+    font-size:11px;
+    color:var(--gold);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+  }
+  .contact-item a{
+    color:var(--chalk);
+    text-decoration:none;
+    border-bottom:1px dashed var(--rule);
+    transition:color 0.2s ease, border-color 0.2s ease;
+    word-break:break-all;
+  }
+  .contact-item a:hover{
+    color:var(--gold);
+    border-color:var(--gold);
+  }
+
+  /* Contact Form */
+  .contact-form{
+    background:var(--bg-panel);
+    border:1px dashed var(--rule);
+    border-radius:4px;
+    padding:26px;
+  }
+  .form-group{
+    margin-bottom:18px;
+  }
+  .form-group label{
+    display:block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--gold);
+    margin-bottom:6px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+  }
+  .form-group input,
+  .form-group textarea{
+    width:100%;
+    background:var(--bg-input);
+    border:1px solid var(--rule);
+    border-radius:2px;
+    padding:12px 14px;
+    color:var(--chalk);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:14px;
+    outline:none;
+    transition:border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus{
+    border-color:var(--gold);
+    box-shadow:0 0 0 1px var(--gold);
+  }
+  .form-group textarea{
+    resize:vertical;
+    min-height:100px;
+  }
+  .btn-submit{
+    background:transparent;
+    color:var(--gold);
+    border:1px solid var(--gold);
+    padding:12px 24px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    cursor:pointer;
+    border-radius:2px;
+    transition:all 0.25s ease;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .btn-submit:hover{
+    background:var(--gold);
+    color:#fff;
+    transform:translateY(-2px);
+  }
+  [data-theme="dark"] .btn-submit:hover{
+    color:#000;
+  }
+
+  footer{padding:56px 0 80px; text-align:center;}
+  .sign-off{font-family:'Kalam', cursive; font-size:20px; color:var(--gold); transform:rotate(-0.5deg); display:inline-block; margin-bottom:18px;}
+  .footer-links{
+    font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--chalk-dim);
+    display:flex; gap:20px; justify-content:center; flex-wrap:wrap; align-items:center;
+  }
+  .footer-links a{
+    color:var(--chalk); text-decoration:none; border-bottom:1px solid var(--rule);
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .footer-links a:hover{color:var(--gold); border-color:var(--gold);}
+  .footer-links svg{width:14px; height:14px; fill:currentColor;}
+
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity 0.6s ease, transform 0.6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  @media (max-width:768px){
+    header.hero{padding:30px 0 44px;}
+    .profile-wrap{position:static; margin:24px 0; width:130px; height:130px;}
+    .sec-head{flex-direction:column; align-items:flex-start; gap:6px;}
+    .margin-note{margin-left:0;}
+    .contact-section{grid-template-columns:1fr; gap:30px;}
+  }
+</style>
+</head>
+<body data-theme="dark">
+
+<div class="wrap">
+
+  <!-- Top bar with Theme Switcher -->
+  <div class="top-bar">
+    <div class="eyebrow" style="margin-bottom:0;">Portfolio — 2026</div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+      <span id="themeIcon">
+        <svg viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 00-1.41-1.41l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 00-1.41-1.41l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
+      </span>
+      <span id="themeText">Light</span>
+    </button>
+  </div>
+
+  <header class="hero">
+    <h1 class="name">Hichem Mezaad <em>(AKA "Ginzo")</em></h1>
+    <div class="role-line">Data Analyst & Future Data Scientist — ENSSEA (ex-INPS), ALGERIA</div>
+
+    <div class="profile-wrap">
+      <img class="profile-photo" src="profile.png" alt="Hichem Mezaad — Ginzo">
+    </div>
+
+    <!-- Quick Academic & Project Metrics -->
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-val">Rank #1 <span>Male</span></div>
+        <div class="stat-label">Preparatory Cycle @ ESGEN</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">Rank #8 <span>ENSSEA</span></div>
+        <div class="stat-label">Master Concours (23 Admitted)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">ENSSEA <span>4th Year</span></div>
+        <div class="stat-label">Statistics & Data Science Major</div>
+      </div>
+    </div>
+
+    <!-- Interactive Gaussian Normal Distribution Curve -->
+    <div class="hero-distribution">
+      <svg viewBox="0 0 860 210" xmlns="http://www.w3.org/2000/svg">
+        <!-- Baseline & Grid lines -->
+        <line x1="40" y1="175" x2="820" y2="175" stroke="var(--chart-base)" stroke-width="1.2"/>
+        
+        <!-- Standard deviation chalk ticks -->
+        <line x1="170" y1="175" x2="170" y2="182" stroke="var(--teal)" stroke-width="1.5"/>
+        <line x1="300" y1="175" x2="300" y2="182" stroke="var(--teal)" stroke-width="1.5"/>
+        <line x1="430" y1="25" x2="430" y2="185" stroke="var(--gold)" opacity="0.4" stroke-width="1.2" stroke-dasharray="4 4"/>
+        <line x1="560" y1="175" x2="560" y2="182" stroke="var(--teal)" stroke-width="1.5"/>
+        <line x1="690" y1="175" x2="690" y2="182" stroke="var(--teal)" stroke-width="1.5"/>
+
+        <!-- Shaded confidence interval -->
+        <path d="M 170 175 C 230 175 270 150 300 120 C 350 70 390 30 430 30 C 470 30 510 70 560 120 C 590 150 630 175 690 175 Z" fill="var(--teal)" opacity="0.15"/>
+
+        <!-- Gaussian Bell Curve Stroke -->
+        <path id="bellcurve" d="M 50 174 C 150 174 230 170 300 120 C 360 75 395 30 430 30 C 465 30 500 75 560 120 C 630 170 710 174 810 174" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round"/>
+
+        <!-- Mean Point Node -->
+        <circle cx="430" cy="30" r="4.5" fill="var(--gold)"/>
+        
+        <!-- Statistical Annotations -->
+        <text x="430" y="16" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="var(--gold)" text-anchor="middle" font-weight="600">μ (Expected Value)</text>
+        <text x="430" y="105" font-family="Fraunces, serif" font-size="14" fill="var(--chalk)" text-anchor="middle" font-style="italic" opacity="0.85">95.4% Confidence Interval</text>
+
+        <!-- Sigma labels -->
+        <text x="170" y="198" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--chalk-dim)" text-anchor="middle">-2σ</text>
+        <text x="300" y="198" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--chalk-dim)" text-anchor="middle">-1σ</text>
+        <text x="430" y="198" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--gold)" text-anchor="middle">μ = 0</text>
+        <text x="560" y="198" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--chalk-dim)" text-anchor="middle">+1σ</text>
+        <text x="690" y="198" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--chalk-dim)" text-anchor="middle">+2σ</text>
+      </svg>
+      <div class="dist-caption">
+        <span>FIG. 1 — Gaussian Density Distribution &bull; Statistical Significance</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="reveal">
+    <div class="sec-head">
+      <span class="sec-num">§ 01</span>
+      <h2>About</h2>
+      <span class="margin-note">academic & journey →</span>
+    </div>
+    <p class="lede">
+      Hello, I'm Hichem Mezaad, a 4th-year student at <span class="accent">ENSSEA</span> majoring in Statistics &amp; Data Science. 
+      Prior to joining ENSSEA, I completed my 2-year preparatory cycle at <span class="accent">ESGEN</span> (École Supérieure de Management et d'Économie Numérique), where I graduated <span class="gold-accent">Rank #1 among male students</span> in general standing. Then I succeeded in the competitive ENSSEA entrance exam, securing <span class="gold-accent">Rank #8</span> among only 23 admitted candidates.
+    </p>
+  </section>
+
+  <!-- Academic Background & Track Record Section -->
+  <section class="reveal">
+    <div class="sec-head">
+      <span class="sec-num">§ 02</span>
+      <h2>Academic Track Record</h2>
+      <span class="margin-note">merit & milestones</span>
+    </div>
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-role">2025 — PRESENT &bull; 2ND CYCLE (INGÉNIEUR / MASTER)</div>
+        <div class="t-title">ENSSEA — Statistics &amp; Data Science Major</div>
+        <div class="t-desc">Advanced statistical theory, machine learning modeling, econometrics, and big data architectures.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-role">ACADEMIC COMPETITION &bull; ENSSEA CONCOURS</div>
+        <div class="t-title">ENSSEA Entrance Concours — Ranked 8th</div>
+        <div class="t-desc">Successfully passed the ENSSEA entrance examination for second-cycle engineering/master admission, ranking <strong>8th</strong> nationwide among only <strong>23 admitted students</strong>.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-role">PREPARATORY CYCLE &bull; ESGEN (2023–2025)</div>
+        <div class="t-title">École Supérieure de Management et d'Économie Numérique</div>
+        <div class="t-desc">Ranked <strong>#1 male student</strong> across the preparatory classes in academic standing.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-role">BAC EXAMINATION JUNE 2023 &bull;</div>
+        <div class="t-title">Ali Ferrah High School - Berrouaghia - Medea - Algeria</div>
+        <div class="t-desc">Having the Baccalaureate Certificate Examination, Session 2023 with a mention of <strong>Good</strong> and with a GPA of <strong>15.64</strong> in Experimental Sciences.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="sec-head">
+      <span class="sec-num">§ 03</span>
+      <h2>Toolkit</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-top"><div class="skill-name">Python</div><div class="skill-rating">4/5</div></div>
+        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick"></span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-top"><div class="skill-name">R</div><div class="skill-rating">3/5</div></div>
+        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick"></span><span class="tick"></span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-top"><div class="skill-name">SQL</div><div class="skill-rating">2/5</div></div>
+        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-top"><div class="skill-name">Pandas</div><div class="skill-rating">3/5</div></div>
+        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick"></span><span class="tick"></span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-top"><div class="skill-name">Scikit-learn</div><div class="skill-rating">2/5</div></div>
+        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-top"><div class="skill-name">Power BI</div><div class="skill-rating">4.5/5</div></div>
+        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick half"></span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-top"><div class="skill-name">Excel</div><div class="skill-rating">3/5</div></div>
+        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick"></span><span class="tick"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="sec-head">
+      <span class="sec-num">§ 04</span>
+      <h2>Involvement — Dataspace</h2>
+      <span class="margin-note">est. active</span>
+    </div>
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-role">ORGANIZING TEAM</div>
+        <div class="t-title">NeuralX — "Rise of Notions"</div>
+        <div class="t-desc">Dataspace's flagship 72-hour datathon at ENSSEA (April 23–25), organized with sponsors AYRADE, AI GRID, and Sourca Algérie.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-role">HOST &amp; KEYNOTE</div>
+        <div class="t-title">"Next Step" Orientation Event</div>
+        <div class="t-desc">Moderated the session and delivered opening insights, helping students navigate specializations in Data Science, Actuarial Science, and Applied Statistics.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-role">REPRESENTATIVE</div>
+        <div class="t-title">Manara Event — ENSM Kolea</div>
+        <div class="t-desc">Represented Dataspace at Manara, organized jointly with Club Formation des Compétences (CFC).</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="sec-head">
+      <span class="sec-num">§ 05</span>
+      <h2>Projects</h2>
+      <span class="margin-note">selected work ↓</span>
+    </div>
+    <div class="project-grid">
+      
+      <!-- Project 01 -->
+      <div class="project-card">
+        <div>
+          <div class="project-slot-label">01 — Power BI / Dashboard</div>
+          <div class="project-slot-title">Algeria Sales Dashboard 2024</div>
+          <div class="project-tags">Power BI · DAX · Data Visualization</div>
+          <div class="project-slot-desc">
+            Comprehensive business intelligence dashboard analyzing sales performance, revenue trends, and customer metrics across Algerian regions for 2024.
+          </div>
+        </div>
+        <a href="https://github.com/hichemmzd" target="_blank" rel="noopener" class="project-link">
+          VIEW ON GITHUB <span>&rarr;</span>
+        </a>
+      </div>
+
+      <!-- Project 02 -->
+      <div class="project-card">
+        <div>
+          <div class="project-slot-label">02 — Machine Learning / EDA</div>
+          <div class="project-slot-title">Stroke Prediction ML</div>
+          <div class="project-tags">Python · Pandas · Scikit-learn · EDA</div>
+          <div class="project-slot-desc">
+            End-to-end classification pipeline for stroke risk prediction, featuring comprehensive data cleaning, exploratory data analysis, and predictive ML models.
+          </div>
+        </div>
+        <a href="https://github.com/hichemmzd" target="_blank" rel="noopener" class="project-link">
+          VIEW ON GITHUB <span>&rarr;</span>
+        </a>
+      </div>
+
+      <!-- Project 03 -->
+      <div class="project-card">
+        <div>
+          <div class="project-slot-label">03 — BI &amp; Executive Analytics</div>
+          <div class="project-slot-title">RetailPulse Analytics &amp; Performance</div>
+          <div class="project-tags">Power BI · DAX · Multi-page Dashboard</div>
+          <div class="project-slot-desc">
+            4-page executive dashboard (2022–2024) delivering deep insights across Sales Overview, Regional Performance, Customer Segmentation, and Strategic Recommendations.
+          </div>
+        </div>
+        <a href="https://www.linkedin.com/feed/update/urn:li:activity:7492947372600086528/" target="_blank" rel="noopener" class="project-link">
+          VIEW ON LINKEDIN <span>&rarr;</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+<!-- Contact & Connect Section -->
+  <section class="reveal">
+    <div class="sec-head">
+      <span class="sec-num">§ 06</span>
+      <h2>Get In Touch</h2>
+      <span class="margin-note">let's connect →</span>
+    </div>
+    
+    <div class="contact-section">
+      <!-- Direct Links with Custom SVG Icons -->
+      <div>
+        <p class="lede" style="font-size:15px; margin-bottom:16px;">
+          Feel free to reach out for collaborations, project inquiries, or data discussions.
+        </p>
+        <div class="contact-info-list">
+          
+          <!-- Email -->
+          <div class="contact-item">
+            <div class="contact-icon-box">
+              <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </div>
+            <div class="contact-text">
+              <span class="contact-label">Email</span>
+              <a href="mailto:hichemmezaad18@gmail.com">hichemmezaad18@gmail.com</a>
+            </div>
+          </div>
+
+          <!-- LinkedIn -->
+          <div class="contact-item">
+            <div class="contact-icon-box">
+              <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.69 1.69 0 1 0 0-3.38 1.69 1.69 0 0 0 0 3.38m1.4 9.74v-8.37H5.06v8.37h2.8z"/></svg>
+            </div>
+            <div class="contact-text">
+              <span class="contact-label">LinkedIn</span>
+              <a href="https://www.linkedin.com/in/hichem-mezaad-05b040351/" target="_blank" rel="noopener">hichem-mezaad</a>
+            </div>
+          </div>
+
+          <!-- GitHub -->
+          <div class="contact-item">
+            <div class="contact-icon-box">
+              <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+            </div>
+            <div class="contact-text">
+              <span class="contact-label">GitHub</span>
+              <a href="https://github.com/hichemmzd" target="_blank" rel="noopener">github.com/hichemmzd</a>
+            </div>
+          </div>
+
+          <!-- Instagram -->
+          <div class="contact-item">
+            <div class="contact-icon-box">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </div>
+            <div class="contact-text">
+              <span class="contact-label">Instagram</span>
+              <a href="https://www.instagram.com/hichem_mzd?igsi=MnJuYWt4ZXBxeHZ3" target="_blank" rel="noopener">@hichem_mzd</a>
+            </div>
+          </div>
+
+          <!-- Facebook -->
+          <div class="contact-item">
+            <div class="contact-icon-box">
+              <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+            </div>
+            <div class="contact-text">
+              <span class="contact-label">Facebook</span>
+              <a href="https://www.facebook.com/share/17h2GdCjm2/?mibextid=wwXIfr" target="_blank" rel="noopener">Hichem Mezaad</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Interactive Contact Form -->
+      <form class="contact-form" action="https://formspree.io/f/mnpqqlro" method="POST">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="John Doe" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" name="email" placeholder="john@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Your Message</label>
+          <textarea id="message" name="message" rows="4" placeholder="Hello Hichem, let's discuss..." required></textarea>
+        </div>
+        <button type="submit" class="btn-submit">
+          Send Message <span>&rarr;</span>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="reveal">
+    <div class="sign-off">— thanks for reading this far.</div>
+    <div class="footer-links">
+      <a href="mailto:hichemmezaad18@gmail.com">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Email
+      </a>
+      <a href="https://www.linkedin.com/in/hichem-mezaad-05b040351/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.69 1.69 0 1 0 0-3.38 1.69 1.69 0 0 0 0 3.38m1.4 9.74v-8.37H5.06v8.37h2.8z"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/hichemmzd" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+        GitHub
+      </a>
+      <a href="https://www.instagram.com/hichem_mzd?igsi=MnJuYWt4ZXBxeHZ3" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        Instagram
+      </a>
+      <a href="https://www.facebook.com/share/17h2GdCjm2/?mibextid=wwXIfr" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+        Facebook
+      </a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // Dark / Light Theme Switcher with localStorage
+  const themeToggleBtn = document.getElementById('themeToggle');
+  const themeText = document.getElementById('themeText');
+  const themeIcon = document.getElementById('themeIcon');
+  const body = document.body;
+
+  const sunIcon = `<svg viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 00-1.41-1.41l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 00-1.41-1.41l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>`;
+  const moonIcon = `<svg viewBox="0 0 24 24"><path d="M12.3 2a10 10 0 0 0-1.9 19.8 10 10 0 0 0 11.5-11.5c-4.4.8-8.8-2.6-9.6-8.3z"/></svg>`;
+
+  const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
+  applyTheme(savedTheme);
+
+  themeToggleBtn.addEventListener('click', () => {
+    const currentTheme = body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    applyTheme(newTheme);
+    localStorage.setItem('portfolio-theme', newTheme);
+  });
+
+  function applyTheme(theme) {
+    body.setAttribute('data-theme', theme);
+    if (theme === 'light') {
+      themeIcon.innerHTML = moonIcon;
+      themeText.textContent = 'Dark';
+    } else {
+      themeIcon.innerHTML = sunIcon;
+      themeText.textContent = 'Light';
+    }
+  }
+
+  // Smooth animated draw for the Gaussian curve on load
+  const bell = document.getElementById('bellcurve');
+  if (bell) {
+    const len = bell.getTotalLength();
+    bell.style.strokeDasharray = len;
+    bell.style.strokeDashoffset = len;
+    bell.style.transition = 'stroke-dashoffset 1.6s ease';
+    requestAnimationFrame(()=> {
+      setTimeout(()=>{ bell.style.strokeDashoffset = 0; }, 200);
+    });
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.12});
+  revealEls.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
+"""
