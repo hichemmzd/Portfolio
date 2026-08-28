@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+code = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -507,6 +507,57 @@
     color:#000;
   }
 
+  /* Top Announcement Note Bar */
+  .note-bar {
+    background: var(--bg-panel);
+    border-bottom: 1px dashed var(--rule);
+    padding: 10px 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--chalk-dim);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+  }
+  .note-bar-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto;
+  }
+  .note-badge {
+    background: rgba(215, 164, 65, 0.15);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 11px;
+  }
+  .note-text {
+    color: var(--chalk);
+  }
+  .note-text strong {
+    color: var(--teal);
+  }
+  .note-close {
+    background: transparent;
+    border: none;
+    color: var(--chalk-dim);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    padding: 2px 6px;
+    transition: color 0.2s ease;
+  }
+  .note-close:hover {
+    color: var(--rust);
+  }
+
   footer{padding:56px 0 80px; text-align:center;}
   .sign-off{font-family:'Kalam', cursive; font-size:20px; color:var(--gold); transform:rotate(-0.5deg); display:inline-block; margin-bottom:18px;}
   .footer-links{
@@ -530,15 +581,27 @@
     .margin-note{margin-left:0;}
     .contact-section{grid-template-columns:1fr; gap:30px;}
   }
+  @media (max-width: 600px) {
+    .note-bar { font-size: 11px; padding: 8px 12px; }
+    .note-badge { display: none; }
+  }
 </style>
 </head>
 <body data-theme="dark">
+  <!-- Top Note Bar -->
+<div class="note-bar" id="noteBar">
+  <div class="note-bar-content">
+    <span class="note-badge">Open to Work</span>
+    <span class="note-text">Currently seeking a <strong>Data Science & Analytics Internship / Project Collaboration</strong> 📊</span>
+  </div>
+  <button class="note-close" onclick="document.getElementById('noteBar').style.display='none'" aria-label="Close Note Bar">&times;</button>
+</div>
 
 <div class="wrap">
 
   <!-- Top bar with Theme Switcher -->
   <div class="top-bar">
-    <div class="eyebrow" style="margin-bottom:0;">Portfolio — </div>
+    <div class="eyebrow" style="margin-bottom:0;">Portfolio — 2026</div>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
       <span id="themeIcon">
         <svg viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 00-1.41-1.41l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 00-1.41-1.41l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
@@ -660,25 +723,32 @@
     </div>
     <div class="skills-grid">
       <div class="skill-card">
-        <div class="skill-top"><div class="skill-name">Python</div>
+        <div class="skill-top"><div class="skill-name">Python</div><div class="skill-rating">4/5</div></div>
+        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick"></span></div>
       </div>
       <div class="skill-card">
-        <div class="skill-top"><div class="skill-name">R</div>
+        <div class="skill-top"><div class="skill-name">R</div><div class="skill-rating">3/5</div></div>
+        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick"></span><span class="tick"></span></div>
       </div>
       <div class="skill-card">
-        <div class="skill-top"><div class="skill-name">SQL</div>
+        <div class="skill-top"><div class="skill-name">SQL</div><div class="skill-rating">2/5</div></div>
+        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></div>
       </div>
       <div class="skill-card">
-        <div class="skill-top"><div class="skill-name">Pandas</div>
+        <div class="skill-top"><div class="skill-name">Pandas</div><div class="skill-rating">3/5</div></div>
+        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick"></span><span class="tick"></span></div>
       </div>
       <div class="skill-card">
-        <div class="skill-top"><div class="skill-name">Scikit-learn</div>
+        <div class="skill-top"><div class="skill-name">Scikit-learn</div><div class="skill-rating">2/5</div></div>
+        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick"></span><span class="tick"></span></div>
       </div>
       <div class="skill-card">
-        <div class="skill-top"><div class="skill-name">Power BI</div>$
+        <div class="skill-top"><div class="skill-name">Power BI</div><div class="skill-rating">4.5/5</div></div>
+        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick half"></span></div>
       </div>
       <div class="skill-card">
-        <div class="skill-top"><div class="skill-name">Excel</div>
+        <div class="skill-top"><div class="skill-name">Excel</div><div class="skill-rating">3/5</div></div>
+        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick"></span><span class="tick"></span></div>
       </div>
     </div>
   </section>
@@ -764,7 +834,7 @@
     </div>
   </section>
 
-<!-- Contact & Connect Section -->
+  <!-- Contact & Connect Section -->
   <section class="reveal">
     <div class="sec-head">
       <span class="sec-num">§ 06</span>
@@ -824,6 +894,28 @@
             </div>
           </div>
 
+          <!-- Telegram -->
+          <div class="contact-item">
+            <div class="contact-icon-box">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+            </div>
+            <div class="contact-text">
+              <span class="contact-label">Telegram</span>
+              <a href="https://t.me/themezd" target="_blank" rel="noopener">@themezd</a>
+            </div>
+          </div>
+
+          <!-- Discord -->
+          <div class="contact-item">
+            <div class="contact-icon-box">
+              <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+            </div>
+            <div class="contact-text">
+              <span class="contact-label">Discord</span>
+              <a href="https://discord.com/users/hichem_mezaad" target="_blank" rel="noopener">@hichem_mezaad</a>
+            </div>
+          </div>
+
           <!-- Facebook -->
           <div class="contact-item">
             <div class="contact-icon-box">
@@ -839,7 +931,7 @@
       </div>
 
       <!-- Interactive Contact Form -->
-      <form class="contact-form" action="https://formspree.io/f/mnpqqlro" method="POST">
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/mnpqqlro" method="POST">
         <div class="form-group">
           <label for="name">Your Name</label>
           <input type="text" id="name" name="name" placeholder="John Doe" required>
@@ -852,9 +944,10 @@
           <label for="message">Your Message</label>
           <textarea id="message" name="message" rows="4" placeholder="Hello Hichem, let's discuss..." required></textarea>
         </div>
-        <button type="submit" class="btn-submit">
+        <button type="submit" class="btn-submit" id="submitBtn">
           Send Message <span>&rarr;</span>
         </button>
+        <p id="formStatus" style="display:none; margin-top:14px; font-family:'IBM Plex Mono', monospace; font-size:13px;"></p>
       </form>
     </div>
   </section>
@@ -881,6 +974,14 @@
       <a href="https://www.facebook.com/share/17h2GdCjm2/?mibextid=wwXIfr" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
         Facebook
+      </a>
+      <a href="https://t.me/themezd" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+        Telegram
+      </a>
+      <a href="https://discord.com/users/hichem_mezaad" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+        Discord
       </a>
     </div>
   </footer>
@@ -938,8 +1039,52 @@
     });
   }, {threshold:0.12});
   revealEls.forEach(el=>io.observe(el));
+
+  // AJAX Form Submission without redirect
+  const contactForm = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const formStatus = document.getElementById('formStatus');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', async function(event) {
+      event.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Sending...';
+
+      const data = new FormData(contactForm);
+
+      try {
+        const response = await fetch(contactForm.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          formStatus.style.display = 'block';
+          formStatus.style.color = 'var(--teal)';
+          formStatus.innerHTML = '✓ Message sent successfully! Thanks for reaching out.';
+          contactForm.reset();
+        } else {
+          throw new Error('Form submission failed');
+        }
+      } catch (error) {
+        formStatus.style.display = 'block';
+        formStatus.style.color = 'var(--rust)';
+        formStatus.innerHTML = '✕ Oops! There was a problem sending your message.';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Send Message <span>&rarr;</span>';
+      }
+    });
+  }
 </script>
 
 </body>
 </html>
 """
+
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(code)
+
+print("Saved cleanly.")
