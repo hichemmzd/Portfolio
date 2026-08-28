@@ -1,13 +1,13 @@
-code = """<!DOCTYPE html>
+final_clean_portfolio = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ginzo's Portfolio</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Kalam:wght@400;700&family=Noto+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#080808;
@@ -55,7 +55,6 @@ code = """<!DOCTYPE html>
     overflow-x:hidden;
     transition:background-color 0.3s ease, color 0.3s ease;
   }
-  /* chalk dust texture */
   body::before{
     content:"";
     position:fixed;
@@ -68,25 +67,55 @@ code = """<!DOCTYPE html>
   }
   .wrap{max-width:920px; margin:0 auto; padding:0 28px; position:relative; z-index:2;}
 
-  /* Top Navigation & Theme Toggle */
-  .top-bar{
+  /* Top Navigation Bar (Navbar) */
+  .nav-header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:24px 0 10px;
+    padding:20px 0;
+    border-bottom:1px solid var(--rule-soft);
+    position:sticky;
+    top:0;
+    background:var(--bg);
+    z-index:100;
+    transition:background-color 0.3s ease;
+  }
+  .nav-logo{
+    font-family:'Fraunces', serif;
+    font-size:20px;
+    color:var(--gold);
+    text-decoration:none;
+    font-weight:600;
+  }
+  .nav-menu{
+    display:flex;
+    align-items:center;
+    gap:22px;
+    list-style:none;
+  }
+  .nav-menu a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--chalk-dim);
+    text-decoration:none;
+    letter-spacing:0.04em;
+    transition:color 0.2s ease;
+  }
+  .nav-menu a:hover{
+    color:var(--gold);
   }
   .theme-toggle{
     background:var(--bg-panel);
     border:1px dashed var(--rule);
     color:var(--chalk);
-    padding:8px 14px;
+    padding:6px 12px;
     border-radius:20px;
     font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
+    font-size:11px;
     cursor:pointer;
     display:inline-flex;
     align-items:center;
-    gap:8px;
+    gap:6px;
     transition:all 0.25s ease;
   }
   .theme-toggle:hover{
@@ -95,8 +124,8 @@ code = """<!DOCTYPE html>
     transform:translateY(-1px);
   }
   .theme-toggle svg{
-    width:15px;
-    height:15px;
+    width:13px;
+    height:13px;
     fill:currentColor;
   }
 
@@ -269,56 +298,37 @@ code = """<!DOCTYPE html>
   .t-title{font-family:'Fraunces', serif; font-size:19px; font-weight:500; margin-bottom:6px;}
   .t-desc{font-size:15px; color:var(--chalk-dim); max-width:680px;}
 
-  /* skills */
+  /* Clean Tag-Based Skills (No Ratings/Ticks) */
   .skills-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(190px,1fr));
-    gap:14px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
     margin-top:8px;
   }
-  .skill-card{
+  .skill-badge{
     border:1px dashed var(--rule);
-    border-radius:2px;
-    padding:16px 16px 14px;
+    border-radius:3px;
+    padding:10px 18px;
     background:var(--bg-panel);
-    transition:border-color 0.25s ease, transform 0.25s ease;
-  }
-  .skill-card:hover{border-color:var(--gold); transform:translateY(-2px);}
-  .skill-name{
     font-family:'IBM Plex Mono', monospace;
-    font-size:14px;
+    font-size:13.5px;
     font-weight:500;
+    color:var(--chalk);
     letter-spacing:0.02em;
-  }
-  .skill-rating{
-    margin-left:auto;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    color:var(--chalk-dim);
-  }
-  .skill-top{
-    display:flex;
+    display:inline-flex;
     align-items:center;
-    justify-content:space-between;
     gap:8px;
+    transition:all 0.25s ease;
   }
-  .skill-ticks{margin-top:10px; display:flex; gap:4px;}
-  .tick{
-    width:14px;
-    height:4px;
-    background:var(--rule);
-    position:relative;
-    overflow:hidden;
+  .skill-badge::before{
+    content:"›";
+    color:var(--teal);
+    font-weight:600;
   }
-  .tick.on{background:var(--teal);}
-  .tick.half::after{
-    content:"";
-    position:absolute;
-    left:0;
-    top:0;
-    bottom:0;
-    width:50%;
-    background:var(--teal);
+  .skill-badge:hover{
+    border-color:var(--gold);
+    color:var(--gold);
+    transform:translateY(-2px);
   }
 
   /* projects */
@@ -507,57 +517,6 @@ code = """<!DOCTYPE html>
     color:#000;
   }
 
-  /* Top Announcement Note Bar */
-  .note-bar {
-    background: var(--bg-panel);
-    border-bottom: 1px dashed var(--rule);
-    padding: 10px 20px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--chalk-dim);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    z-index: 10;
-  }
-  .note-bar-content {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0 auto;
-  }
-  .note-badge {
-    background: rgba(215, 164, 65, 0.15);
-    color: var(--gold);
-    border: 1px solid var(--gold);
-    padding: 2px 8px;
-    border-radius: 2px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    font-size: 11px;
-  }
-  .note-text {
-    color: var(--chalk);
-  }
-  .note-text strong {
-    color: var(--teal);
-  }
-  .note-close {
-    background: transparent;
-    border: none;
-    color: var(--chalk-dim);
-    cursor: pointer;
-    font-size: 16px;
-    line-height: 1;
-    padding: 2px 6px;
-    transition: color 0.2s ease;
-  }
-  .note-close:hover {
-    color: var(--rust);
-  }
-
   footer{padding:56px 0 80px; text-align:center;}
   .sign-off{font-family:'Kalam', cursive; font-size:20px; color:var(--gold); transform:rotate(-0.5deg); display:inline-block; margin-bottom:18px;}
   .footer-links{
@@ -575,42 +534,40 @@ code = """<!DOCTYPE html>
   .reveal.in{opacity:1; transform:translateY(0);}
 
   @media (max-width:768px){
+    .nav-menu{display:none;}
     header.hero{padding:30px 0 44px;}
     .profile-wrap{position:static; margin:24px 0; width:130px; height:130px;}
     .sec-head{flex-direction:column; align-items:flex-start; gap:6px;}
     .margin-note{margin-left:0;}
     .contact-section{grid-template-columns:1fr; gap:30px;}
   }
-  @media (max-width: 600px) {
-    .note-bar { font-size: 11px; padding: 8px 12px; }
-    .note-badge { display: none; }
-  }
 </style>
 </head>
 <body data-theme="dark">
-  <!-- Top Note Bar -->
-<div class="note-bar" id="noteBar">
-  <div class="note-bar-content">
-    <span class="note-badge">Open to Work</span>
-    <span class="note-text">Currently seeking a <strong>Data Science & Analytics Internship / Project Collaboration</strong> 📊</span>
-  </div>
-  <button class="note-close" onclick="document.getElementById('noteBar').style.display='none'" aria-label="Close Note Bar">&times;</button>
-</div>
 
 <div class="wrap">
 
-  <!-- Top bar with Theme Switcher -->
-  <div class="top-bar">
-    <div class="eyebrow" style="margin-bottom:0;">Portfolio — 2026</div>
+  <!-- Top Navigation Bar (Navbar) -->
+  <nav class="nav-header">
+    <a href="#" class="nav-logo">Hichem.M</a>
+    <ul class="nav-menu">
+      <li><a href="#about">About</a></li>
+      <li><a href="#academic">Academic</a></li>
+      <li><a href="#toolkit">Skills</a></li>
+      <li><a href="#involvement">Involvement</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
       <span id="themeIcon">
         <svg viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 00-1.41-1.41l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 00-1.41-1.41l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
       </span>
       <span id="themeText">Light</span>
     </button>
-  </div>
+  </nav>
 
   <header class="hero">
+    <div class="eyebrow">Portfolio — 2026</div>
     <h1 class="name">Hichem Mezaad <em>(AKA "Ginzo")</em></h1>
     <div class="role-line">Data Analyst & Future Data Scientist — ENSSEA (ex-INPS), ALGERIA</div>
 
@@ -637,30 +594,20 @@ code = """<!DOCTYPE html>
     <!-- Interactive Gaussian Normal Distribution Curve -->
     <div class="hero-distribution">
       <svg viewBox="0 0 860 210" xmlns="http://www.w3.org/2000/svg">
-        <!-- Baseline & Grid lines -->
         <line x1="40" y1="175" x2="820" y2="175" stroke="var(--chart-base)" stroke-width="1.2"/>
-        
-        <!-- Standard deviation chalk ticks -->
         <line x1="170" y1="175" x2="170" y2="182" stroke="var(--teal)" stroke-width="1.5"/>
         <line x1="300" y1="175" x2="300" y2="182" stroke="var(--teal)" stroke-width="1.5"/>
         <line x1="430" y1="25" x2="430" y2="185" stroke="var(--gold)" opacity="0.4" stroke-width="1.2" stroke-dasharray="4 4"/>
         <line x1="560" y1="175" x2="560" y2="182" stroke="var(--teal)" stroke-width="1.5"/>
         <line x1="690" y1="175" x2="690" y2="182" stroke="var(--teal)" stroke-width="1.5"/>
 
-        <!-- Shaded confidence interval -->
         <path d="M 170 175 C 230 175 270 150 300 120 C 350 70 390 30 430 30 C 470 30 510 70 560 120 C 590 150 630 175 690 175 Z" fill="var(--teal)" opacity="0.15"/>
-
-        <!-- Gaussian Bell Curve Stroke -->
         <path id="bellcurve" d="M 50 174 C 150 174 230 170 300 120 C 360 75 395 30 430 30 C 465 30 500 75 560 120 C 630 170 710 174 810 174" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round"/>
 
-        <!-- Mean Point Node -->
         <circle cx="430" cy="30" r="4.5" fill="var(--gold)"/>
-        
-        <!-- Statistical Annotations -->
         <text x="430" y="16" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="var(--gold)" text-anchor="middle" font-weight="600">μ (Expected Value)</text>
         <text x="430" y="105" font-family="Fraunces, serif" font-size="14" fill="var(--chalk)" text-anchor="middle" font-style="italic" opacity="0.85">95.4% Confidence Interval</text>
 
-        <!-- Sigma labels -->
         <text x="170" y="198" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--chalk-dim)" text-anchor="middle">-2σ</text>
         <text x="300" y="198" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--chalk-dim)" text-anchor="middle">-1σ</text>
         <text x="430" y="198" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--gold)" text-anchor="middle">μ = 0</text>
@@ -673,7 +620,8 @@ code = """<!DOCTYPE html>
     </div>
   </header>
 
-  <section class="reveal">
+  <!-- Section 01: About -->
+  <section class="reveal" id="about">
     <div class="sec-head">
       <span class="sec-num">§ 01</span>
       <h2>About</h2>
@@ -685,8 +633,8 @@ code = """<!DOCTYPE html>
     </p>
   </section>
 
-  <!-- Academic Background & Track Record Section -->
-  <section class="reveal">
+  <!-- Section 02: Academic -->
+  <section class="reveal" id="academic">
     <div class="sec-head">
       <span class="sec-num">§ 02</span>
       <h2>Academic Track Record</h2>
@@ -716,44 +664,29 @@ code = """<!DOCTYPE html>
     </div>
   </section>
 
-  <section class="reveal">
+  <!-- Section 03: Skills (Clean & No Ratings) -->
+  <section class="reveal" id="toolkit">
     <div class="sec-head">
       <span class="sec-num">§ 03</span>
-      <h2>Toolkit</h2>
+      <h2>Skills &amp; Technologies</h2>
+      <span class="margin-note">toolkit</span>
     </div>
     <div class="skills-grid">
-      <div class="skill-card">
-        <div class="skill-top"><div class="skill-name">Python</div><div class="skill-rating">4/5</div></div>
-        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick"></span></div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-top"><div class="skill-name">R</div><div class="skill-rating">3/5</div></div>
-        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick"></span><span class="tick"></span></div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-top"><div class="skill-name">SQL</div><div class="skill-rating">2/5</div></div>
-        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-top"><div class="skill-name">Pandas</div><div class="skill-rating">3/5</div></div>
-        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick"></span><span class="tick"></span></div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-top"><div class="skill-name">Scikit-learn</div><div class="skill-rating">2/5</div></div>
-        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick"></span><span class="tick"></span></div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-top"><div class="skill-name">Power BI</div><div class="skill-rating">4.5/5</div></div>
-        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick half"></span></div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-top"><div class="skill-name">Excel</div><div class="skill-rating">3/5</div></div>
-        <div class="skill-ticks"><span class="tick on"></span><span class="tick on"></span><span class="tick on"></span><span class="tick"></span><span class="tick"></span></div>
-      </div>
+      <div class="skill-badge">Python</div>
+      <div class="skill-badge">R Language</div>
+      <div class="skill-badge">SQL (PostgreSQL)</div>
+      <div class="skill-badge">Pandas &amp; NumPy</div>
+      <div class="skill-badge">Scikit-learn</div>
+      <div class="skill-badge">Power BI &amp; DAX</div>
+      <div class="skill-badge">Advanced Excel</div>
+      <div class="skill-badge">Statistical Modeling</div>
+      <div class="skill-badge">Data Visualization</div>
+      <div class="skill-badge">Machine Learning</div>
     </div>
   </section>
 
-  <section class="reveal">
+  <!-- Section 04: Involvement -->
+  <section class="reveal" id="involvement">
     <div class="sec-head">
       <span class="sec-num">§ 04</span>
       <h2>Involvement — Dataspace</h2>
@@ -778,7 +711,8 @@ code = """<!DOCTYPE html>
     </div>
   </section>
 
-  <section class="reveal">
+  <!-- Section 05: Projects -->
+  <section class="reveal" id="projects">
     <div class="sec-head">
       <span class="sec-num">§ 05</span>
       <h2>Projects</h2>
@@ -834,8 +768,8 @@ code = """<!DOCTYPE html>
     </div>
   </section>
 
-  <!-- Contact & Connect Section -->
-  <section class="reveal">
+  <!-- Section 06: Contact -->
+  <section class="reveal" id="contact">
     <div class="sec-head">
       <span class="sec-num">§ 06</span>
       <h2>Get In Touch</h2>
@@ -843,7 +777,6 @@ code = """<!DOCTYPE html>
     </div>
     
     <div class="contact-section">
-      <!-- Direct Links with Custom SVG Icons -->
       <div>
         <p class="lede" style="font-size:15px; margin-bottom:16px;">
           Feel free to reach out for collaborations, project inquiries, or data discussions.
@@ -989,7 +922,6 @@ code = """<!DOCTYPE html>
 </div>
 
 <script>
-  // Dark / Light Theme Switcher with localStorage
   const themeToggleBtn = document.getElementById('themeToggle');
   const themeText = document.getElementById('themeText');
   const themeIcon = document.getElementById('themeIcon');
@@ -1019,7 +951,6 @@ code = """<!DOCTYPE html>
     }
   }
 
-  // Smooth animated draw for the Gaussian curve on load
   const bell = document.getElementById('bellcurve');
   if (bell) {
     const len = bell.getTotalLength();
@@ -1031,7 +962,6 @@ code = """<!DOCTYPE html>
     });
   }
 
-  // Scroll reveal
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
@@ -1040,7 +970,6 @@ code = """<!DOCTYPE html>
   }, {threshold:0.12});
   revealEls.forEach(el=>io.observe(el));
 
-  // AJAX Form Submission without redirect
   const contactForm = document.getElementById('contactForm');
   const submitBtn = document.getElementById('submitBtn');
   const formStatus = document.getElementById('formStatus');
@@ -1085,6 +1014,6 @@ code = """<!DOCTYPE html>
 """
 
 with open("index.html", "w", encoding="utf-8") as f:
-    f.write(code)
+    f.write(final_clean_portfolio)
 
-print("Saved cleanly.")
+print("Saved clean index.html successfully.")
