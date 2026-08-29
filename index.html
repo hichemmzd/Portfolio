@@ -87,6 +87,11 @@
     text-decoration:none;
     font-weight:600;
   }
+  .nav-right{
+    display:flex;
+    align-items:center;
+    gap:20px;
+  }
   .nav-menu{
     display:flex;
     align-items:center;
@@ -129,6 +134,37 @@
     fill:currentColor;
   }
 
+  /* Hamburger Menu Button for Mobile */
+  .hamburger{
+    display:none;
+    flex-direction:column;
+    justify-content:space-between;
+    width:22px;
+    height:16px;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    padding:0;
+    z-index:110;
+  }
+  .hamburger span{
+    display:block;
+    width:100%;
+    height:2px;
+    background:var(--chalk);
+    border-radius:2px;
+    transition:all 0.3s ease;
+  }
+  .hamburger.active span:nth-child(1){
+    transform:translateY(7px) rotate(45deg);
+  }
+  .hamburger.active span:nth-child(2){
+    opacity:0;
+  }
+  .hamburger.active span:nth-child(3){
+    transform:translateY(-7px) rotate(-45deg);
+  }
+
   header.hero{
     padding:40px 0 50px;
     border-bottom:1px solid var(--rule);
@@ -147,15 +183,22 @@
   h1.name{
     font-family:'Fraunces', serif;
     font-weight:500;
-    font-size:clamp(38px, 7vw, 68px);
-    line-height:1.05;
+    font-size:clamp(36px, 6.5vw, 64px);
+    line-height:1.1;
     letter-spacing:-0.01em;
     max-width:620px;
   }
+  /* Smaller font for AKA "Ginzo" */
   h1.name em{
     font-style:italic;
     color:var(--gold);
-    font-weight:500;
+    font-weight:400;
+    font-size:0.55em;
+    opacity:0.9;
+    letter-spacing:0.02em;
+    margin-left:4px;
+    display:inline-block;
+    vertical-align:middle;
   }
   .role-line{
     font-family:'IBM Plex Mono', monospace;
@@ -533,8 +576,39 @@
   .reveal{opacity:0; transform:translateY(14px); transition:opacity 0.6s ease, transform 0.6s ease;}
   .reveal.in{opacity:1; transform:translateY(0);}
 
+  /* Responsive & Mobile Navigation */
   @media (max-width:768px){
-    .nav-menu{display:none;}
+    .hamburger{
+      display:flex;
+    }
+    .nav-menu{
+      position:fixed;
+      top:65px;
+      left:0;
+      width:100%;
+      background:var(--bg);
+      border-bottom:1px solid var(--rule);
+      flex-direction:column;
+      padding:24px 28px;
+      gap:16px;
+      transform:translateY(-140%);
+      opacity:0;
+      pointer-events:none;
+      transition:transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+      z-index:99;
+      box-shadow:0 14px 28px var(--shadow);
+    }
+    .nav-menu.open{
+      transform:translateY(0);
+      opacity:1;
+      pointer-events:auto;
+    }
+    .nav-menu a{
+      font-size:15px;
+      display:block;
+      padding:6px 0;
+      border-bottom:1px dashed var(--rule-soft);
+    }
     header.hero{padding:30px 0 44px;}
     .profile-wrap{position:static; margin:24px 0; width:130px; height:130px;}
     .sec-head{flex-direction:column; align-items:flex-start; gap:6px;}
@@ -550,20 +624,27 @@
   <!-- Top Navigation Bar (Navbar) -->
   <nav class="nav-header">
     <a href="#" class="nav-logo">Ginzo</a>
-    <ul class="nav-menu">
-      <li><a href="#about">About</a></li>
-      <li><a href="#academic">Academic</a></li>
-      <li><a href="#toolkit">Skills</a></li>
-      <li><a href="#involvement">Involvement</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
-      <span id="themeIcon">
-        <svg viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 00-1.41-1.41l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 00-1.41-1.41l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
-      </span>
-      <span id="themeText">Light</span>
-    </button>
+    <div class="nav-right">
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#about">About</a></li>
+        <li><a href="#academic">Academic</a></li>
+        <li><a href="#toolkit">Skills</a></li>
+        <li><a href="#involvement">Involvement</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+        <span id="themeIcon">
+          <svg viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 00-1.41-1.41l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 00-1.41-1.41l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
+        </span>
+        <span id="themeText">Light</span>
+      </button>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
   </nav>
 
   <header class="hero">
@@ -675,6 +756,9 @@
       <div class="skill-badge">Python</div>
       <div class="skill-badge">R Language</div>
       <div class="skill-badge">SQL (SQL SERVER)</div>
+      <div class="skill-badge">French Language</div>
+      <div class="skill-badge">English Language</div>
+      <div class="skill-badge">Creating Designs using Canva</div>
       <div class="skill-badge">Pandas &amp; NumPy</div>
       <div class="skill-badge">Scikit-learn</div>
       <div class="skill-badge">Power BI &amp; DAX</div>
@@ -694,9 +778,19 @@
     </div>
     <div class="timeline">
       <div class="t-item">
-        <div class="t-role">ORGANIZING TEAM</div>
-        <div class="t-title">NeuralX — "Rise of Notions"</div>
-        <div class="t-desc">Dataspace's flagship 72-hour datathon at ENSSEA (April 23–25), organized with sponsors AYRADE, AI GRID, and Sourca Algérie.</div>
+       <div class="t-role">COM MEMBER</div>
+       <div class="t-title">Data Space Club</div>
+       <div class="t-desc">I was a member in the COM department in DataSpace Club.</div>
+      </div>
+     <div class="t-item">
+       <div class="t-role">HR MEMBER</div>
+       <div class="t-title">Data Space Club</div>
+       <div class="t-desc">Transferred to the HR department in DataSpace Club.</div>
+      </div>
+     <div class="t-item">
+       <div class="t-role">ORGANIZING TEAM</div>
+       <div class="t-title">NeuralX — "Rise of Notions"</div>
+       <div class="t-desc">Dataspace's flagship 72-hour datathon at ENSSEA (April 23–25), organized with sponsors AYRADE, AI GRID, and Sourca Algérie.</div>
       </div>
       <div class="t-item">
         <div class="t-role">HOST &amp; KEYNOTE</div>
@@ -730,7 +824,7 @@
             Comprehensive business intelligence dashboard analyzing sales performance, revenue trends, and customer metrics across Algerian regions for 2024.
           </div>
         </div>
-        <a href="https://github.com/hichemmzd" target="_blank" rel="noopener" class="project-link">
+        <a href="https://github.com/hichemmzd/Algeria-Sales-Dashboard-2024" target="_blank" rel="noopener" class="project-link">
           VIEW ON GITHUB <span>&rarr;</span>
         </a>
       </div>
@@ -745,7 +839,7 @@
             End-to-end classification pipeline for stroke risk prediction, featuring comprehensive data cleaning, exploratory data analysis, and predictive ML models.
           </div>
         </div>
-        <a href="https://github.com/hichemmzd" target="_blank" rel="noopener" class="project-link">
+        <a href="https://github.com/hichemmzd/stroke-prediction-ml" target="_blank" rel="noopener" class="project-link">
           VIEW ON GITHUB <span>&rarr;</span>
         </a>
       </div>
@@ -922,6 +1016,7 @@
 </div>
 
 <script>
+  // Theme Toggle Logic
   const themeToggleBtn = document.getElementById('themeToggle');
   const themeText = document.getElementById('themeText');
   const themeIcon = document.getElementById('themeIcon');
@@ -951,6 +1046,26 @@
     }
   }
 
+  // Mobile Navigation Drawer Toggle
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const navMenu = document.getElementById('navMenu');
+
+  if (hamburgerBtn && navMenu) {
+    hamburgerBtn.addEventListener('click', () => {
+      hamburgerBtn.classList.toggle('active');
+      navMenu.classList.toggle('open');
+    });
+
+    // Automatically close menu when clicking any nav link
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburgerBtn.classList.remove('active');
+        navMenu.classList.remove('open');
+      });
+    });
+  }
+
+  // Gaussian Curve Animation
   const bell = document.getElementById('bellcurve');
   if (bell) {
     const len = bell.getTotalLength();
@@ -962,6 +1077,7 @@
     });
   }
 
+  // Scroll Reveal Animations
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
@@ -970,6 +1086,7 @@
   }, {threshold:0.12});
   revealEls.forEach(el=>io.observe(el));
 
+  // Formspree Contact Form Submission
   const contactForm = document.getElementById('contactForm');
   const submitBtn = document.getElementById('submitBtn');
   const formStatus = document.getElementById('formStatus');
@@ -1011,4 +1128,3 @@
 
 </body>
 </html>
-
